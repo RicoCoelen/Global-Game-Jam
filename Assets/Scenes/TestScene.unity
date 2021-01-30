@@ -136,9 +136,9 @@ GameObject:
   - component: {fileID: 96735856}
   - component: {fileID: 96735855}
   - component: {fileID: 96735857}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,7 +183,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: b8ccd4bf0b9882d4792570bf4646e24e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: df6d70d3cd5e6d24d881ba9283f8e359, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -202,8 +202,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96735852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.73, y: 0.102, z: 0}
-  m_LocalScale: {x: 1.6338, y: 0.4296, z: 1}
+  m_LocalPosition: {x: -3.41, y: -1.756, z: 0}
+  m_LocalScale: {x: 0.04805836, y: 0.047717694, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -221,18 +221,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.17611313, y: -0.35474896}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.95703125, y: 0.9609375}
+    oldSize: {x: 16, y: 13}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.95703125, y: 0.9609375}
+  m_Size: {x: 14.3418865, y: 8.765383}
   m_EdgeRadius: 0
 --- !u!50 &96735856
 Rigidbody2D:
@@ -269,6 +269,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerForce: 120
   playerAimHitbox: 1.2
+  loseParticleSystem: {fileID: 2755103079209337313, guid: 32b86a480beb7e34db3b06f8cb1cfd6f, type: 3}
+  fakeParticleSystem: {fileID: 8602635355370888011, guid: f3686dadd1637bb4e8b9bcbf816e6dc1, type: 3}
 --- !u!1 &176195386
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +350,7 @@ Transform:
   m_GameObject: {fileID: 176195386}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.6502, y: -2.88, z: 0}
-  m_LocalScale: {x: 14.881607, y: 1, z: 1}
+  m_LocalScale: {x: 200.26, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
