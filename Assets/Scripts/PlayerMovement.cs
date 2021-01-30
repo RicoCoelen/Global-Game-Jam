@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Player movement")]
     [SerializeField] private float playerForce;
     [SerializeField] private float playerAimHitbox;
+    [Header("Player movement visualisation")]
+    [SerializeField] private Transform forceArrow;
+    [SerializeField] private Transform forceArrowBody;
+    [SerializeField] private Transform forceArrowHead;
 
     private Controls controls;
     private bool leftMousePressedLastFrame = false;
