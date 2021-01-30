@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2755103079209337342}
   - component: {fileID: 5863305053637351283}
   m_Layer: 7
-  m_Name: Physical Money Particle
+  m_Name: Physical Money Emitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ ParticleSystem:
   serializedVersion: 7
   lengthInSec: 0.4
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -812,7 +812,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.0001
       mode: 0
       spread: 0
       speed:

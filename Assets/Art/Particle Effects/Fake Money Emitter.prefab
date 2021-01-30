@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8602635355370888021}
   - component: {fileID: 8602635355370888020}
   m_Layer: 7
-  m_Name: Beefy_Particle_System (2)
+  m_Name: Fake Money Emitte
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ ParticleSystem:
   serializedVersion: 7
   lengthInSec: 0.4
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
