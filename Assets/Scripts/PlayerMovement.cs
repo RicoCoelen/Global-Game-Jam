@@ -52,11 +52,7 @@ public class PlayerMovement : MonoBehaviour
         {
             forceArrow.gameObject.SetActive(false);
             LaunchWallet(mousePosition);
-            // add particle effects
-            Instantiate(loseParticleSystem, transform);
-            Instantiate(fakeParticleSystem, transform);
-            // camera shake
-            virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
+            LaunchWalletVisuals();
             // add function to remove money from score
             // losemoney(force, direction);
         }
@@ -69,6 +65,15 @@ public class PlayerMovement : MonoBehaviour
         Vector2 force = (Vector2)transform.position - mousePosition;
         force *= playerForce;
         rigidbody.AddForce(force);
+    }
+
+    private void LaunchWalletVisuals()
+    {
+        // add particle effects
+        Instantiate(loseParticleSystem, transform);
+        Instantiate(fakeParticleSystem, transform);
+        // camera shake
+        virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
     }
 
     private void DrawLaunchDirectionArrow(Vector2 mousePosition)
