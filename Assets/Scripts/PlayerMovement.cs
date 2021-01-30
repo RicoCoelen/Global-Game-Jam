@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private float playerForce;
     [SerializeField] private float playerAimHitbox;
 
     private Controls controls;
@@ -29,6 +30,20 @@ public class PlayerMovement : MonoBehaviour
             if (Vector2.Distance(transform.position, mousePosition) < playerAimHitbox)
             {
                 aimingWallet = true;
+            }
+        }
+        else if (leftMousePressed && leftMousePressedLastFrame)
+        {
+            // TODO draw arrow to show force
+        }
+        else if (!leftMousePressed && leftMousePressedLastFrame)
+        {
+            if (aimingWallet)
+            {
+                aimingWallet = false;
+                Vector2 force = (Vector2)transform.position - mousePosition;
+                force *= playerForce;
+                rigidbody.AddForce(force);
             }
         }
         leftMousePressedLastFrame = leftMousePressed;
