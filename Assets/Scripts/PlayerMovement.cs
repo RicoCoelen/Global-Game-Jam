@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Player Settings")]
     [SerializeField] private float playerForce;
     [SerializeField] private float playerAimHitbox;
 
-    // particle systems
+    [Header("Particle Systems")]
     [SerializeField] private GameObject loseParticleSystem;
     [SerializeField] private GameObject fakeParticleSystem;
 
-    // camera's
+    [Header("Camera's")]
     [SerializeField] private GameObject virtualPlayerCam;
 
     private Controls controls;
