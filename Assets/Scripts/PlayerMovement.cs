@@ -25,29 +25,35 @@ public class PlayerMovement : MonoBehaviour
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
         // Player launching wallet
-        if (leftMousePressed && !leftMousePressedLastFrame)
+        if (leftMousePressed && !leftMousePressedLastFrame &&
+            // Checking if the player clicked on the wallet
+            Vector2.Distance(transform.position, mousePosition) < playerAimHitbox)
         {
-            if (Vector2.Distance(transform.position, mousePosition) < playerAimHitbox)
-            {
-                aimingWallet = true;
-            }
+            aimingWallet = true;
         }
         else if (leftMousePressed && leftMousePressedLastFrame)
         {
-            // TODO draw arrow to show force
+            DrawLaunchDirectionArrow();
         }
-        else if (!leftMousePressed && leftMousePressedLastFrame)
+        else if (aimingWallet && !leftMousePressed && leftMousePressedLastFrame)
         {
-            if (aimingWallet)
-            {
-                aimingWallet = false;
-                Vector2 force = (Vector2)transform.position - mousePosition;
-                force *= playerForce;
-                rigidbody.AddForce(force);
-            }
+            LaunchWallet(mousePosition);
         }
         leftMousePressedLastFrame = leftMousePressed;
         mousePositionLastFrame = mousePosition;
+    }
+
+    private void LaunchWallet(Vector2 mousePosition)
+    {
+        aimingWallet = false;
+        Vector2 force = (Vector2)transform.position - mousePosition;
+        force *= playerForce;
+        rigidbody.AddForce(force);
+    }
+
+    private void DrawLaunchDirectionArrow()
+    {
+
     }
 
     private void OnDrawGizmosSelected()
