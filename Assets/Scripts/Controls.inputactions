@@ -6,7 +6,7 @@
             "id": "1475d034-5821-4107-b758-909d2fda4b2c",
             "actions": [
                 {
-                    "name": "RightMouse",
+                    "name": "LeftMouse",
                     "type": "Value",
                     "id": "f11db059-7973-45ff-87c6-fcfd556e590a",
                     "expectedControlType": "Button",
@@ -30,7 +30,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RightMouse",
+                    "action": "LeftMouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

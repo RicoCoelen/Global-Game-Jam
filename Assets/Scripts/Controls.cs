@@ -19,7 +19,7 @@ public class @Controls : IInputActionCollection, IDisposable
             ""id"": ""1475d034-5821-4107-b758-909d2fda4b2c"",
             ""actions"": [
                 {
-                    ""name"": ""RightMouse"",
+                    ""name"": ""LeftMouse"",
                     ""type"": ""Value"",
                     ""id"": ""f11db059-7973-45ff-87c6-fcfd556e590a"",
                     ""expectedControlType"": ""Button"",
@@ -43,7 +43,7 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RightMouse"",
+                    ""action"": ""LeftMouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -65,7 +65,7 @@ public class @Controls : IInputActionCollection, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_RightMouse = m_Gameplay.FindAction("RightMouse", throwIfNotFound: true);
+        m_Gameplay_LeftMouse = m_Gameplay.FindAction("LeftMouse", throwIfNotFound: true);
         m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
     }
 
@@ -116,13 +116,13 @@ public class @Controls : IInputActionCollection, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_RightMouse;
+    private readonly InputAction m_Gameplay_LeftMouse;
     private readonly InputAction m_Gameplay_MousePosition;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
         public GameplayActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @RightMouse => m_Wrapper.m_Gameplay_RightMouse;
+        public InputAction @LeftMouse => m_Wrapper.m_Gameplay_LeftMouse;
         public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -133,9 +133,9 @@ public class @Controls : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
-                @RightMouse.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightMouse;
-                @RightMouse.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightMouse;
-                @RightMouse.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightMouse;
+                @LeftMouse.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftMouse;
+                @LeftMouse.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftMouse;
+                @LeftMouse.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftMouse;
                 @MousePosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
@@ -143,9 +143,9 @@ public class @Controls : IInputActionCollection, IDisposable
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @RightMouse.started += instance.OnRightMouse;
-                @RightMouse.performed += instance.OnRightMouse;
-                @RightMouse.canceled += instance.OnRightMouse;
+                @LeftMouse.started += instance.OnLeftMouse;
+                @LeftMouse.performed += instance.OnLeftMouse;
+                @LeftMouse.canceled += instance.OnLeftMouse;
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
@@ -155,7 +155,7 @@ public class @Controls : IInputActionCollection, IDisposable
     public GameplayActions @Gameplay => new GameplayActions(this);
     public interface IGameplayActions
     {
-        void OnRightMouse(InputAction.CallbackContext context);
+        void OnLeftMouse(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
     }
 }
