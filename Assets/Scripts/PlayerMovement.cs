@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject loseParticleSystem;
     [SerializeField] private GameObject fakeParticleSystem;
 
+    // camera's
+    [SerializeField] private GameObject virtualPlayerCam;
+
     private Controls controls;
     private bool leftMousePressedLastFrame = false;
     private Vector2 mousePositionLastFrame = Vector2.zero;
@@ -52,6 +55,9 @@ public class PlayerMovement : MonoBehaviour
                 // add particle effects
                 Instantiate(loseParticleSystem, transform);
                 Instantiate(fakeParticleSystem, transform);
+
+                // camera shake
+                virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
 
                 // add function to remove money from score
                 // losemoney(force, direction);
