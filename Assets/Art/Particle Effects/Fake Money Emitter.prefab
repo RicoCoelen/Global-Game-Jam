@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8602635355370888021}
   - component: {fileID: 8602635355370888020}
   m_Layer: 7
-  m_Name: Fake Money Emitte
+  m_Name: Fake Money Emitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,7 +284,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.8
+      scalar: 15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -746,7 +746,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 15
       mode: 0
       spread: 0
       speed:

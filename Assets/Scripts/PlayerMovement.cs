@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Player Settings")]
+    [Header("Player movement")]
     [SerializeField] private float playerForce;
     [SerializeField] private float playerAimHitbox;
+    [Header("Player movement visualisation")]
+    [SerializeField] private Transform forceArrow;
+    [SerializeField] private Transform forceArrowBody;
+    [SerializeField] private Transform forceArrowHead;
+    [SerializeField] private float arrowWalletSeparationDistance;
 
     [Header("Particle Systems")]
     [SerializeField] private GameObject loseParticleSystem;
@@ -17,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Controls controls;
     private bool leftMousePressedLastFrame = false;
-    private Vector2 mousePositionLastFrame = Vector2.zero;
     private new Rigidbody2D rigidbody;
     private bool aimingWallet = false;
 
@@ -33,39 +37,53 @@ public class PlayerMovement : MonoBehaviour
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
         // Player launching wallet
-        if (leftMousePressed && !leftMousePressedLastFrame)
+        if (leftMousePressed && !leftMousePressedLastFrame &&
+            // Checking if the player clicked on the wallet
+            Vector2.Distance(transform.position, mousePosition) < playerAimHitbox)
         {
-            if (Vector2.Distance(transform.position, mousePosition) < playerAimHitbox)
-            {
-                aimingWallet = true;
-            }
+            aimingWallet = true;
+            forceArrow.gameObject.SetActive(true);
         }
-        else if (leftMousePressed && leftMousePressedLastFrame)
+        if (leftMousePressed && aimingWallet)
         {
-            // TODO draw arrow to show force
+            DrawLaunchDirectionArrow(mousePosition);
         }
-        else if (!leftMousePressed && leftMousePressedLastFrame)
+        else if (aimingWallet && !leftMousePressed)
         {
-            if (aimingWallet)
-            {
-                aimingWallet = false;
-                Vector2 force = (Vector2)transform.position - mousePosition;
-                force *= playerForce;
-                rigidbody.AddForce(force);
-
-                // add particle effects
-                Instantiate(loseParticleSystem, transform);
-                Instantiate(fakeParticleSystem, transform);
-
-                // camera shake
-                virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
-
-                // add function to remove money from score
-                // losemoney(force, direction);
-            }
+            forceArrow.gameObject.SetActive(false);
+            LaunchWallet(mousePosition);
+            // add particle effects
+            Instantiate(loseParticleSystem, transform);
+            Instantiate(fakeParticleSystem, transform);
+            // camera shake
+            virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
+            // add function to remove money from score
+            // losemoney(force, direction);
         }
         leftMousePressedLastFrame = leftMousePressed;
-        mousePositionLastFrame = mousePosition;
+    }
+
+    private void LaunchWallet(Vector2 mousePosition)
+    {
+        aimingWallet = false;
+        Vector2 force = (Vector2)transform.position - mousePosition;
+        force *= playerForce;
+        rigidbody.AddForce(force);
+    }
+
+    private void DrawLaunchDirectionArrow(Vector2 mousePosition)
+    {
+        float mouseToWallet = Vector2.Distance(transform.position, mousePosition);
+        // force arrow position and rotation
+        float arrowDirection = Vector2.SignedAngle(Vector2.right, (Vector2)transform.position - mousePosition);
+        forceArrow.localRotation = Quaternion.Euler(0, 0, arrowDirection);
+        forceArrow.position = (Vector2)transform.position + ((mouseToWallet + arrowWalletSeparationDistance) / 2 * ((Vector2)transform.position - mousePosition).normalized);
+        // force arrow body length
+        Vector3 bodyScale = forceArrowBody.localScale;
+        bodyScale.x = mouseToWallet;
+        forceArrowBody.localScale = bodyScale;
+        // force arrow head position
+        forceArrowHead.localPosition = new Vector3(mouseToWallet / 2, 0);
     }
 
     private void OnDrawGizmosSelected()

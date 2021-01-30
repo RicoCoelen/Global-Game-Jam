@@ -74,6 +74,7 @@ public class CinemachineCameraShaker : MonoBehaviour
         _perlin.m_FrequencyGain = frequency;
         yield return new WaitForSeconds(duration);
         CameraReset();
+        Camera.main.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
     /// <summary>
