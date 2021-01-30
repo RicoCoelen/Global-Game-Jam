@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Player Settings")]
     [SerializeField] private float playerForce;
     [SerializeField] private float playerAimHitbox;
 
-    // particle systems
+    [Header("Particle Systems")]
     [SerializeField] private GameObject loseParticleSystem;
     [SerializeField] private GameObject fakeParticleSystem;
+
+    [Header("Camera's")]
+    [SerializeField] private GameObject virtualPlayerCam;
 
     private Controls controls;
     private bool leftMousePressedLastFrame = false;
@@ -52,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
                 // add particle effects
                 Instantiate(loseParticleSystem, transform);
                 Instantiate(fakeParticleSystem, transform);
+
+                // camera shake
+                virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
 
                 // add function to remove money from score
                 // losemoney(force, direction);
