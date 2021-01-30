@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerForce: 120
-  playerAimHitbox: 72.64
+  playerAimHitbox: 1.2
 --- !u!1 &176195386
 GameObject:
   m_ObjectHideFlags: 0

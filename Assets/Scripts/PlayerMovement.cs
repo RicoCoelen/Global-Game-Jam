@@ -49,4 +49,10 @@ public class PlayerMovement : MonoBehaviour
         leftMousePressedLastFrame = leftMousePressed;
         mousePositionLastFrame = mousePosition;
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, playerAimHitbox);
+    }
 }
