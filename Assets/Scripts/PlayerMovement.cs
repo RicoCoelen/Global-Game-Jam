@@ -13,6 +13,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform forceArrowHead;
     [SerializeField] private float arrowWalletSeparationDistance;
 
+    [Header("Particle Systems")]
+    [SerializeField] private GameObject loseParticleSystem;
+    [SerializeField] private GameObject fakeParticleSystem;
+
+    [Header("Camera's")]
+    [SerializeField] private GameObject virtualPlayerCam;
+
     private Controls controls;
     private bool leftMousePressedLastFrame = false;
     private new Rigidbody2D rigidbody;
@@ -45,6 +52,13 @@ public class PlayerMovement : MonoBehaviour
         {
             forceArrow.gameObject.SetActive(false);
             LaunchWallet(mousePosition);
+            // add particle effects
+            Instantiate(loseParticleSystem, transform);
+            Instantiate(fakeParticleSystem, transform);
+            // camera shake
+            virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
+            // add function to remove money from score
+            // losemoney(force, direction);
         }
         leftMousePressedLastFrame = leftMousePressed;
     }
