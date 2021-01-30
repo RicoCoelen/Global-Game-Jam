@@ -267,6 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42cc0611ad9d5a54fb0b17e92b6f0a97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerForce: 120
+  playerAimHitbox: 72.64
 --- !u!1 &176195386
 GameObject:
   m_ObjectHideFlags: 0
