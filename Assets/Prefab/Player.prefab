@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2427817216686738625}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.41, y: -1.7559986, z: 0}
-  m_LocalScale: {x: 0.04805836, y: 0.047717694, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -100,7 +100,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 15
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42cc0611ad9d5a54fb0b17e92b6f0a97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerForce: 120
-  playerAimHitbox: 1.2
+  playerForce: 100
+  playerAimHitbox: 7.26
   loseParticleSystem: {fileID: 2755103079209337313, guid: 32b86a480beb7e34db3b06f8cb1cfd6f, type: 3}
   fakeParticleSystem: {fileID: 8602635355370888011, guid: f3686dadd1637bb4e8b9bcbf816e6dc1, type: 3}
   virtualPlayerCam: {fileID: 0}
