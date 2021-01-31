@@ -24,12 +24,14 @@ public class PlayerMovement : MonoBehaviour
     private bool leftMousePressedLastFrame = false;
     private new Rigidbody2D rigidbody;
     private bool aimingWallet = false;
+    private CashCount cashCount;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         controls = new Controls();
         controls.Enable();
+        cashCount = FindObjectOfType<CashCount>();
     }
 
     private void Update()
@@ -53,8 +55,7 @@ public class PlayerMovement : MonoBehaviour
             forceArrow.gameObject.SetActive(false);
             LaunchWallet(mousePosition);
             LaunchWalletVisuals();
-            // add function to remove money from score
-            // losemoney(force, direction);
+            cashCount.JumpLoseCash(Vector2.Distance(transform.position, mousePosition));
         }
         leftMousePressedLastFrame = leftMousePressed;
     }
