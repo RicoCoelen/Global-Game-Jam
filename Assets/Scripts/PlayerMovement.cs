@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckIfGrounded()
     {
-        if (rigidbody.velocity.x < speed && rigidbody.velocity.y < speed)
+        if (Mathf.Abs(rigidbody.velocity.x) < speed && Mathf.Abs(rigidbody.velocity.y) < speed)
             time -= Time.deltaTime;
         else
             time = startTime; 
