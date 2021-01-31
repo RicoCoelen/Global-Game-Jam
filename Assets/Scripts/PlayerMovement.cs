@@ -26,11 +26,9 @@ public class PlayerMovement : MonoBehaviour
     private bool aimingWallet = false;
     private CashCount cashCount;
 
-    [Header("Time and speed before jump when standing on ground")]
-    [SerializeField] private float time;
-    private float startTime;
-    [SerializeField] private float speed;
-    private bool isGrounded;
+    [Header("Distance to ground")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float distance;
 
     private void Awake()
     {
@@ -38,22 +36,20 @@ public class PlayerMovement : MonoBehaviour
         controls = new Controls();
         controls.Enable();
         cashCount = FindObjectOfType<CashCount>();
-        startTime = time;
+
     }
 
     private void Update()
     {
-
-        print(isGrounded);
-        CheckIfGrounded();
-
+        print(isGrounded());
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
         // Player launching wallet
         if (leftMousePressed && !leftMousePressedLastFrame &&
             // Checking if the player clicked on the wallet
             Vector2.Distance(transform.position, mousePosition) < playerAimHitbox &&
-            isGrounded)
+            isGrounded()
+            )
         {
             aimingWallet = true;
             forceArrow.gameObject.SetActive(true);
@@ -112,16 +108,27 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, playerAimHitbox);
     }
 
-    private void CheckIfGrounded()
+    private bool isGrounded()
     {
-        if (Mathf.Abs(rigidbody.velocity.x) < speed && Mathf.Abs(rigidbody.velocity.y) < speed)
-            time -= Time.deltaTime;
-        else
-            time = startTime; 
+        float xOffset = GetComponent<Collider2D>().bounds.size.x/2;
+        Vector2 position = transform.position;
+        Vector2 direction = Vector2.down;
 
-        if (time <= 0)
-            isGrounded = true;
-        else
-            isGrounded = false;
+        RaycastHit2D hit1 = Physics2D.Raycast(new Vector2(transform.position.x - xOffset, transform.position.y), direction, distance, groundLayer);
+        RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(transform.position.x + xOffset, transform.position.y), direction, distance, groundLayer);
+
+        if (hit1.collider != null || hit2.collider != null)
+            return true;
+
+        return false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        float xOffset = GetComponent<Collider2D>().bounds.size.x / 2;
+        Vector2 direction = Vector2.down * distance;
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(new Vector2(transform.position.x - xOffset, transform.position.y), direction);
+        Gizmos.DrawRay(new Vector2(transform.position.x + xOffset, transform.position.y), direction);
     }
 }
