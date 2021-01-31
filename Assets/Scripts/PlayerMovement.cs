@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        print(isGrounded());
+
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
         // Player launching wallet
