@@ -73,7 +73,9 @@ public class PlayerMovement : MonoBehaviour
         // add particle effects
         Instantiate(loseParticleSystem, transform);
         Instantiate(fakeParticleSystem, transform);
+
         // camera shake
+        if (cashCount.Cash > 0)
         virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
     }
 

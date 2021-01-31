@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7363937301255511539}
   - component: {fileID: 7363937301255511536}
   - component: {fileID: 7363937301255511538}
+  - component: {fileID: -538496332124766928}
   m_Layer: 0
   m_Name: Trophee
   m_TagString: Untagged
@@ -119,3 +120,24 @@ PolygonCollider2D:
       - {x: 0.42606354, y: 3.260456}
       - {x: 2.308937, y: 5.504505}
       - {x: 2.248146, y: 9.749382}
+--- !u!50 &-538496332124766928
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7363937301255511537}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

@@ -8,6 +8,11 @@ public class CashCount : MonoBehaviour
     [Header("Cash loss calculations")]
     [SerializeField] private int minCashLoss;
     [SerializeField] private int cashForceLossMultiplier;
+    [SerializeField] GameObject moneyText;
+
+    [Header("Overlay")]
+    [SerializeField] private GameObject deathScreen;
+
     public int Cash { get; private set; }
 
     private void Awake()
@@ -16,9 +21,30 @@ public class CashCount : MonoBehaviour
         ResetCash();
     }
 
+    private void LateUpdate()
+    {
+        if (moneyText)
+        {
+            moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = $"$ {this.Cash}";
+        }
+    }
+
+    private void ShowLoseOverlay()
+    {
+        Time.timeScale = 0;
+        deathScreen.SetActive(true);
+    }
+
     public void JumpLoseCash(float force)
     {
-        RemoveCash((int)(minCashLoss + force * cashForceLossMultiplier));
+        if (0 >= Cash)
+        {
+            ShowLoseOverlay();
+        }
+        else
+        {
+            RemoveCash((int)(minCashLoss + force * cashForceLossMultiplier));
+        }
     }
 
     public void ResetCash()

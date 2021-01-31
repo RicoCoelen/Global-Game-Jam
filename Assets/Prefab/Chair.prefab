@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4289321646391664597}
   - component: {fileID: 4289321646391664598}
   - component: {fileID: 4289321646391664599}
+  - component: {fileID: -4399658809854387887}
   m_Layer: 0
   m_Name: Chair
   m_TagString: Untagged
@@ -121,3 +122,24 @@ PolygonCollider2D:
       - {x: 11.5, y: 9}
       - {x: -10.5, y: 9}
       - {x: -12.5, y: 10}
+--- !u!50 &-4399658809854387887
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4289321646391664596}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
