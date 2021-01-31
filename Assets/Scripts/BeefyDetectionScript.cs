@@ -9,8 +9,6 @@ public class BeefyDetectionScript : MonoBehaviour
     public LayerMask layerMask;
     public int damage;
     private CashCount cashCounter;
-    public float timer;
-    private float startTime;
 
     private void Start()
     {
