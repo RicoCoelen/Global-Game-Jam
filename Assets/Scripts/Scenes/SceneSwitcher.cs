@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour
 {
     [SerializeField] private bool isRestart = false;
-    [SerializeField] private int sceneIndex;
+    [SerializeField] private string sceneName;
     private GameObject restartManager;
     private RestartScript restartFunction;
     private bool runOnce = false;
@@ -16,34 +16,29 @@ public class SceneSwitcher : MonoBehaviour
 
     public void Start()
     {
-        soundManager = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundManager>();
+        var scuffed = GameObject.FindGameObjectWithTag("SoundManager");
+        if (scuffed)
+        soundManager = scuffed.GetComponent<SoundManager>();
+
         restartManager = GameObject.FindGameObjectWithTag("LevelRestarter");
+        if (restartManager)
         restartFunction = restartManager.GetComponent<RestartScript>();
 
     }
 
     public void switchScene()
     {
+        if(selectSound)
         soundManager.PlaySingle(selectSound);
-        SceneManager.LoadScene(sceneIndex);
+
+        SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1;
     }
 
     public void nextLevel()
     {
         soundManager.PlaySingle(selectSound);
         SceneManager.LoadScene(restartFunction.previousIndex + 1);
+        Time.timeScale = 1;
     }
-
-    public void Update()
-    {
-        if (runOnce == false)
-        {
-            if (isRestart)
-            {
-                sceneIndex = restartFunction.previousIndex;
-            }
-            runOnce = true;
-        }
-    }
-
 }

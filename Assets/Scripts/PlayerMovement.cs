@@ -17,29 +17,43 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject loseParticleSystem;
     [SerializeField] private GameObject fakeParticleSystem;
 
-    [Header("Camera's")]
+    [Header("Cameras")]
     [SerializeField] private GameObject virtualPlayerCam;
 
     private Controls controls;
     private bool leftMousePressedLastFrame = false;
     private new Rigidbody2D rigidbody;
     private bool aimingWallet = false;
+    private CashCount cashCount;
+
+    [Header("Time and speed before jump when standing on ground")]
+    [SerializeField] private float time;
+    private float startTime;
+    [SerializeField] private float speed;
+    private bool isGrounded;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         controls = new Controls();
         controls.Enable();
+        cashCount = FindObjectOfType<CashCount>();
+        startTime = time;
     }
 
     private void Update()
     {
+
+        print(isGrounded);
+        CheckIfGrounded();
+
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
         // Player launching wallet
         if (leftMousePressed && !leftMousePressedLastFrame &&
             // Checking if the player clicked on the wallet
-            Vector2.Distance(transform.position, mousePosition) < playerAimHitbox)
+            Vector2.Distance(transform.position, mousePosition) < playerAimHitbox &&
+            isGrounded)
         {
             aimingWallet = true;
             forceArrow.gameObject.SetActive(true);
@@ -52,13 +66,8 @@ public class PlayerMovement : MonoBehaviour
         {
             forceArrow.gameObject.SetActive(false);
             LaunchWallet(mousePosition);
-            // add particle effects
-            Instantiate(loseParticleSystem, transform);
-            Instantiate(fakeParticleSystem, transform);
-            // camera shake
-            virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
-            // add function to remove money from score
-            // losemoney(force, direction);
+            LaunchWalletVisuals();
+            cashCount.JumpLoseCash(Vector2.Distance(transform.position, mousePosition));
         }
         leftMousePressedLastFrame = leftMousePressed;
     }
@@ -69,6 +78,17 @@ public class PlayerMovement : MonoBehaviour
         Vector2 force = (Vector2)transform.position - mousePosition;
         force *= playerForce;
         rigidbody.AddForce(force);
+    }
+
+    private void LaunchWalletVisuals()
+    {
+        // add particle effects
+        Instantiate(loseParticleSystem, transform);
+        Instantiate(fakeParticleSystem, transform);
+
+        // camera shake
+        if (cashCount.Cash > 0)
+            virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
     }
 
     private void DrawLaunchDirectionArrow(Vector2 mousePosition)
@@ -90,5 +110,18 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, playerAimHitbox);
+    }
+
+    private void CheckIfGrounded()
+    {
+        if (Mathf.Abs(rigidbody.velocity.x) < speed && Mathf.Abs(rigidbody.velocity.y) < speed)
+            time -= Time.deltaTime;
+        else
+            time = startTime; 
+
+        if (time <= 0)
+            isGrounded = true;
+        else
+            isGrounded = false;
     }
 }
