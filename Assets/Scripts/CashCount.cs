@@ -19,7 +19,6 @@ public class CashCount : MonoBehaviour
     public void JumpLoseCash(float force)
     {
         RemoveCash((int)(minCashLoss + force * cashForceLossMultiplier));
-        print(Cash);
     }
 
     public void ResetCash()
