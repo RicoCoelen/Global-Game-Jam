@@ -47,6 +47,11 @@ public class CashCount : MonoBehaviour
         }
     }
 
+    public int GetCurrentCashEstimation(float force)
+    {
+        return (int)(minCashLoss + force * cashForceLossMultiplier);
+    }
+
     public void ResetCash()
     {
         Cash = startingCash;
