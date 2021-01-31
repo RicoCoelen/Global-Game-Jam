@@ -31,8 +31,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float distance;
 
+    [Header("Sound when pushing")]
+    private SoundManager soundManager;
+    [SerializeField] private AudioClip pushSound = null;
+
     private void Awake()
     {
+        if (GameObject.FindGameObjectWithTag("SoundManager") != null)
+            soundManager = GameObject.FindGameObjectWithTag("SoundManager").transform.GetComponent<SoundManager>();
+
         rigidbody = GetComponent<Rigidbody2D>();
         controls = new Controls();
         controls.Enable();
@@ -88,6 +95,9 @@ public class PlayerMovement : MonoBehaviour
         // camera shake
         if (cashCount.Cash > 0)
             virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
+
+        if (soundManager != null)
+            soundManager.RandomizeSfx(pushSound);
     }
 
     private void DrawLaunchDirectionArrow(Vector2 mousePosition)
