@@ -9,18 +9,23 @@ public class BeefyDetectionScript : MonoBehaviour
     public LayerMask layerMask;
     public int damage;
     private CashCount cashCounter;
-
+    private PlayerMovement player;
+    
     private void Start()
     {
         cashCounter = GameObject.FindGameObjectWithTag("CashCounter").GetComponent<CashCount>();
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, distance, layerMask);
 
-        if(hit.Length > 0)
-            cashCounter.RemoveCash(damage);
+        if(hit.Length > 0 && hit[0].gameObject != null)
+        {
+            player.WalletDamage(hit[0].gameObject, damage);
+            
+        }
     }
 
     private void OnDrawGizmosSelected()

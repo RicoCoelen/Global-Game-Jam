@@ -21,7 +21,7 @@ public class CashCount : MonoBehaviour
         ResetCash();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (moneyText)
         {
@@ -60,10 +60,12 @@ public class CashCount : MonoBehaviour
     public void AddCash(int amount)
     {
         Cash += amount;
+        moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = $"$ {this.Cash}";
     }
 
     public void RemoveCash(int amount)
     {
         Cash -= amount;
+        moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = $"$ {this.Cash}";
     }
 }
