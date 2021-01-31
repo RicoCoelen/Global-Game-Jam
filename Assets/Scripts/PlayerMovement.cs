@@ -14,6 +14,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float arrowWalletSeparationDistance;
     [SerializeField] private GameObject cashEstimatorText;
 
+    [Header("Damage Systems")]
+    [SerializeField] private float flashTime;
+    [SerializeField] private Color originalColor;
+    [SerializeField] private float damageDelay;
+    [SerializeField] private float cooldownDamage;
+    [SerializeField] private float damageForce;
+
     [Header("Particle Systems")]
     [SerializeField] private GameObject loseParticleSystem;
     [SerializeField] private GameObject fakeParticleSystem;
@@ -37,12 +44,12 @@ public class PlayerMovement : MonoBehaviour
         controls = new Controls();
         controls.Enable();
         cashCount = FindObjectOfType<CashCount>();
-
+        originalColor = GetComponent<SpriteRenderer>().color;
     }
 
     private void Update()
     {
-
+        damageDelay -= Time.deltaTime;
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
         // Player launching wallet
@@ -128,6 +135,38 @@ public class PlayerMovement : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    public void WalletDamage(GameObject go, int damage)
+    {
+        if (damageDelay <= 0)
+        {
+            damageDelay = cooldownDamage;
+
+            Vector2 direction = new Vector2(go.transform.position.x, go.transform.position.y);
+            float ptd = Vector2.Distance(transform.position, go.transform.position);
+
+            // force arrow position and rotation
+            float DiForce = Vector2.SignedAngle(Vector2.right, direction);
+
+            rigidbody.AddForce(-direction.normalized * damageForce);
+
+            // remove health
+            cashCount.RemoveCash(damage);
+
+            // flash red spawn emmiter
+            GetComponent<SpriteRenderer>().color = Color.red;
+            Invoke("ResetColor", flashTime);
+
+            // particle system
+            Instantiate(fakeParticleSystem, transform);
+            Instantiate(loseParticleSystem, transform);
+        }
+    }
+
+    private void ResetColor()
+    {
+        GetComponent<SpriteRenderer>().color = originalColor;
     }
 
     private void OnDrawGizmos()
