@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject loseParticleSystem;
     [SerializeField] private GameObject fakeParticleSystem;
 
-    [Header("Camera's")]
+    [Header("Cameras")]
     [SerializeField] private GameObject virtualPlayerCam;
 
     private Controls controls;
@@ -25,6 +25,12 @@ public class PlayerMovement : MonoBehaviour
     private new Rigidbody2D rigidbody;
     private bool aimingWallet = false;
     private CashCount cashCount;
+
+    [Header("Layermasks")]
+    [SerializeField] private LayerMask groundLayer;
+
+    [Header("Distance To Ground Check")]
+    [SerializeField] private float distance = 1f;
 
     private void Awake()
     {
@@ -41,7 +47,8 @@ public class PlayerMovement : MonoBehaviour
         // Player launching wallet
         if (leftMousePressed && !leftMousePressedLastFrame &&
             // Checking if the player clicked on the wallet
-            Vector2.Distance(transform.position, mousePosition) < playerAimHitbox)
+            Vector2.Distance(transform.position, mousePosition) < playerAimHitbox &&
+            isGrounded())
         {
             aimingWallet = true;
             forceArrow.gameObject.SetActive(true);
@@ -76,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
         // camera shake
         if (cashCount.Cash > 0)
-        virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
+            virtualPlayerCam.GetComponent<CinemachineCameraShaker>().ShakeCamera(0.1f);
     }
 
     private void DrawLaunchDirectionArrow(Vector2 mousePosition)
@@ -98,5 +105,25 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, playerAimHitbox);
+    }
+
+    private bool isGrounded()
+    {
+        Vector2 position = transform.position;
+        Vector2 direction = Vector2.down;
+
+        RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
+
+        if (hit.collider != null)
+            return true;
+
+        return false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector2 direction = Vector2.down * distance;
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, direction);
     }
 }
