@@ -452,6 +452,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 20000, y: 50}
   m_EdgeRadius: 0
+--- !u!1 &168710560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1442985716, guid: 7c2ebb8f0cda8db429861c3cb97f6547, type: 3}
+  m_PrefabInstance: {fileID: 725422925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &221714706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1062,10 @@ PrefabInstance:
       propertyPath: virtualPlayerCam
       value: 
       objectReference: {fileID: 1023715176}
+    - target: {fileID: 2427817216686738652, guid: fae25bde6b81d5f47b67b611a985684d, type: 3}
+      propertyPath: cashEstimatorText
+      value: 
+      objectReference: {fileID: 168710560}
     - target: {fileID: 2427817216686738652, guid: fae25bde6b81d5f47b67b611a985684d, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 256
@@ -1719,6 +1728,7 @@ PrefabInstance:
     - target: {fileID: 6072410788007998189, guid: 7c2ebb8f0cda8db429861c3cb97f6547, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.000000045672095
+
       objectReference: {fileID: 0}
     - target: {fileID: 6072410788007998189, guid: 7c2ebb8f0cda8db429861c3cb97f6547, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

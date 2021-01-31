@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform forceArrowBody;
     [SerializeField] private Transform forceArrowHead;
     [SerializeField] private float arrowWalletSeparationDistance;
+    [SerializeField] private GameObject cashEstimatorText;
 
     [Header("Particle Systems")]
     [SerializeField] private GameObject loseParticleSystem;
@@ -26,11 +27,9 @@ public class PlayerMovement : MonoBehaviour
     private bool aimingWallet = false;
     private CashCount cashCount;
 
-    [Header("Time and speed before jump when standing on ground")]
-    [SerializeField] private float time;
-    private float startTime;
-    [SerializeField] private float speed;
-    private bool isGrounded;
+    [Header("Distance to ground")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float distance;
 
     private void Awake()
     {
@@ -38,14 +37,11 @@ public class PlayerMovement : MonoBehaviour
         controls = new Controls();
         controls.Enable();
         cashCount = FindObjectOfType<CashCount>();
-        startTime = time;
+
     }
 
     private void Update()
     {
-
-        print(isGrounded);
-        CheckIfGrounded();
 
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
@@ -53,10 +49,12 @@ public class PlayerMovement : MonoBehaviour
         if (leftMousePressed && !leftMousePressedLastFrame &&
             // Checking if the player clicked on the wallet
             Vector2.Distance(transform.position, mousePosition) < playerAimHitbox &&
-            isGrounded)
+            isGrounded()
+            )
         {
             aimingWallet = true;
             forceArrow.gameObject.SetActive(true);
+            cashEstimatorText.gameObject.SetActive(true);
         }
         if (leftMousePressed && aimingWallet)
         {
@@ -64,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (aimingWallet && !leftMousePressed)
         {
+            cashEstimatorText.gameObject.SetActive(false);
             forceArrow.gameObject.SetActive(false);
             LaunchWallet(mousePosition);
             LaunchWalletVisuals();
@@ -104,6 +103,10 @@ public class PlayerMovement : MonoBehaviour
         forceArrowBody.localScale = bodyScale;
         // force arrow head position
         forceArrowHead.localPosition = new Vector3(mouseToWallet / 2, 0);
+        // draw text at location
+        cashEstimatorText.transform.position = transform.position;
+        // calculate money amount to be taken from stash
+        cashEstimatorText.GetComponent<TMPro.TextMeshProUGUI>().text = $"-$ {cashCount.GetCurrentCashEstimation(mouseToWallet)}";
     }
 
     private void OnDrawGizmosSelected()
@@ -112,16 +115,27 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, playerAimHitbox);
     }
 
-    private void CheckIfGrounded()
+    private bool isGrounded()
     {
-        if (Mathf.Abs(rigidbody.velocity.x) < speed && Mathf.Abs(rigidbody.velocity.y) < speed)
-            time -= Time.deltaTime;
-        else
-            time = startTime; 
+        float xOffset = GetComponent<Collider2D>().bounds.size.x/2;
+        Vector2 position = transform.position;
+        Vector2 direction = Vector2.down;
 
-        if (time <= 0)
-            isGrounded = true;
-        else
-            isGrounded = false;
+        RaycastHit2D hit1 = Physics2D.Raycast(new Vector2(transform.position.x - xOffset, transform.position.y), direction, distance, groundLayer);
+        RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(transform.position.x + xOffset, transform.position.y), direction, distance, groundLayer);
+
+        if (hit1.collider != null || hit2.collider != null)
+            return true;
+
+        return false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        float xOffset = GetComponent<Collider2D>().bounds.size.x / 2;
+        Vector2 direction = Vector2.down * distance;
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(new Vector2(transform.position.x - xOffset, transform.position.y), direction);
+        Gizmos.DrawRay(new Vector2(transform.position.x + xOffset, transform.position.y), direction);
     }
 }
