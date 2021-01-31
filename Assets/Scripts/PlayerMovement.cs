@@ -26,11 +26,11 @@ public class PlayerMovement : MonoBehaviour
     private bool aimingWallet = false;
     private CashCount cashCount;
 
-    [Header("Layermasks")]
-    [SerializeField] private LayerMask groundLayer;
-
-    [Header("Distance To Ground Check")]
-    [SerializeField] private float distance = 1f;
+    [Header("Time and speed before jump when standing on ground")]
+    [SerializeField] private float time;
+    private float startTime;
+    [SerializeField] private float speed;
+    private bool isGrounded;
 
     private void Awake()
     {
@@ -38,11 +38,14 @@ public class PlayerMovement : MonoBehaviour
         controls = new Controls();
         controls.Enable();
         cashCount = FindObjectOfType<CashCount>();
+        startTime = time;
     }
 
     private void Update()
     {
-        print(isGrounded());
+
+        print(isGrounded);
+        CheckIfGrounded();
 
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
@@ -50,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         if (leftMousePressed && !leftMousePressedLastFrame &&
             // Checking if the player clicked on the wallet
             Vector2.Distance(transform.position, mousePosition) < playerAimHitbox &&
-            isGrounded())
+            isGrounded)
         {
             aimingWallet = true;
             forceArrow.gameObject.SetActive(true);
@@ -107,18 +110,18 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, playerAimHitbox);
-        Gizmos.DrawWireSphere(transform.position, distance);
     }
 
-    private bool isGrounded()
+    private void CheckIfGrounded()
     {
-        Vector2 position = transform.position;
+        if (rigidbody.velocity.x < speed && rigidbody.velocity.y < speed)
+            time -= Time.deltaTime;
+        else
+            time = startTime; 
 
-        Collider2D[] hit = Physics2D.OverlapCircleAll(position, distance, groundLayer);
-
-        if (hit.Length > 0)
-            return true;
-
-        return false;
+        if (time <= 0)
+            isGrounded = true;
+        else
+            isGrounded = false;
     }
 }
