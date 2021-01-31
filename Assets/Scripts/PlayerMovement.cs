@@ -42,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        print(isGrounded());
+
         bool leftMousePressed = controls.Gameplay.LeftMouse.ReadValue<float>() == 1;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(controls.Gameplay.MousePosition.ReadValue<Vector2>());
         // Player launching wallet
@@ -105,25 +107,18 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, playerAimHitbox);
+        Gizmos.DrawWireSphere(transform.position, distance);
     }
 
     private bool isGrounded()
     {
         Vector2 position = transform.position;
-        Vector2 direction = Vector2.down;
 
-        RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
+        Collider2D[] hit = Physics2D.OverlapCircleAll(position, distance, groundLayer);
 
-        if (hit.collider != null)
+        if (hit.Length > 0)
             return true;
 
         return false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Vector2 direction = Vector2.down * distance;
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, direction);
     }
 }

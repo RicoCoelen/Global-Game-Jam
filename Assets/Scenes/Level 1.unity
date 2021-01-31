@@ -1030,6 +1030,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2427817216686738652, guid: fae25bde6b81d5f47b67b611a985684d, type: 3}
+      propertyPath: distance
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2427817216686738652, guid: fae25bde6b81d5f47b67b611a985684d, type: 3}
       propertyPath: forceArrow
       value: 
       objectReference: {fileID: 354536596}
@@ -1680,7 +1684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6072410788007998189, guid: 7c2ebb8f0cda8db429861c3cb97f6547, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000035563062
+      value: -0.000000036167876
       objectReference: {fileID: 0}
     - target: {fileID: 6072410788007998189, guid: 7c2ebb8f0cda8db429861c3cb97f6547, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
