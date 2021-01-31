@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform forceArrowBody;
     [SerializeField] private Transform forceArrowHead;
     [SerializeField] private float arrowWalletSeparationDistance;
+    [SerializeField] private GameObject cashEstimatorText;
 
     [Header("Particle Systems")]
     [SerializeField] private GameObject loseParticleSystem;
@@ -57,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         {
             aimingWallet = true;
             forceArrow.gameObject.SetActive(true);
+            cashEstimatorText.gameObject.SetActive(true);
         }
         if (leftMousePressed && aimingWallet)
         {
@@ -64,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (aimingWallet && !leftMousePressed)
         {
+            cashEstimatorText.gameObject.SetActive(false);
             forceArrow.gameObject.SetActive(false);
             LaunchWallet(mousePosition);
             LaunchWalletVisuals();
@@ -104,6 +107,10 @@ public class PlayerMovement : MonoBehaviour
         forceArrowBody.localScale = bodyScale;
         // force arrow head position
         forceArrowHead.localPosition = new Vector3(mouseToWallet / 2, 0);
+        // draw text at location
+        cashEstimatorText.transform.position = transform.position;
+        // calculate money amount to be taken from stash
+        cashEstimatorText.GetComponent<TMPro.TextMeshProUGUI>().text = $"-$ {cashCount.GetCurrentCashEstimation(mouseToWallet)}";
     }
 
     private void OnDrawGizmosSelected()
