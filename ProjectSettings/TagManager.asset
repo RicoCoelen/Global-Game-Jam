@@ -7,6 +7,7 @@ TagManager:
   - SoundManager
   - LevelRestarter
   - CashCounter
+  - MoneyEstimator
   layers:
   - Default
   - TransparentFX

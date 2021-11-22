@@ -24,7 +24,10 @@ public class BeefyDetectionScript : MonoBehaviour
         if(hit.Length > 0 && hit[0].gameObject != null)
         {
             player.WalletDamage(hit[0].gameObject, damage);
-            
+            if (damage < 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

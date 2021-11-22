@@ -5,31 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scenes/LevelSelect.unity
-    guid: 10d4e5f4c587e084ea029ccd11585d89
-  - enabled: 1
-    path: Assets/Scenes/TestScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/Level 1.unity
-    guid: 2fd44e99398f86a46bd599e53f0a54d4
-  - enabled: 1
-    path: Assets/Scenes/testscene2.unity
-    guid: 6b808e98146e14b4e938c9712852bf57
   - enabled: 1
     path: Assets/Scenes/Titlescreen.unity
     guid: 2c66af17748cd4b49924df6eaf6ae010
   - enabled: 1
-    path: Assets/Scenes/BeefyScene.unity
-    guid: 19460661b54275f4a8fa30a93c0e948b
-  - enabled: 1
-    path: Assets/Scenes/ProtoScene1.unity
-    guid: c82aa1f05b525ee41be263c9c4e544cb
+    path: Assets/Scenes/Level 1.unity
+    guid: 2fd44e99398f86a46bd599e53f0a54d4
   - enabled: 1
     path: Assets/Scenes/WinningScene.unity
     guid: ffc0f98a9c2cdac469810b17ce9740dd
+  - enabled: 0
+    path: Assets/Scenes/LevelSelect.unity
+    guid: 10d4e5f4c587e084ea029ccd11585d89
+  - enabled: 0
+    path: Assets/Scenes/TestScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: Assets/Scenes/testscene2.unity
+    guid: 6b808e98146e14b4e938c9712852bf57
+  - enabled: 0
+    path: Assets/Scenes/BeefyScene.unity
+    guid: 19460661b54275f4a8fa30a93c0e948b
+  - enabled: 0
+    path: Assets/Scenes/ProtoScene1.unity
+    guid: c82aa1f05b525ee41be263c9c4e544cb
   m_configObjects: {}

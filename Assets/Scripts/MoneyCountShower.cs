@@ -10,12 +10,12 @@ public class MoneyCountShower : MonoBehaviour
 
     private void Awake()
     {
-        cashCount = FindObjectOfType<CashCount>();
-        text = GetComponent<Text>();
+        //cashCount = FindObjectOfType<CashCount>();
+       // text = GetComponent<Text>();
     }
 
     private void Start()
     {
-        text.text = "$" + cashCount.Cash;
+        //text.text = "$" + cashCount.Cash;
     }
 }

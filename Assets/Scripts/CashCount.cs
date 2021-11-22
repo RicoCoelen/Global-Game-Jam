@@ -23,9 +23,13 @@ public class CashCount : MonoBehaviour
 
     private void Update()
     {
-        if (moneyText)
+        if (moneyText && this.Cash > 0)
         {
             moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = $"$ {this.Cash}";
+        }
+        else
+        {
+            moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = "Empty";
         }
     }
 
@@ -66,6 +70,14 @@ public class CashCount : MonoBehaviour
     public void RemoveCash(int amount)
     {
         Cash -= amount;
-        moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = $"$ {this.Cash}";
+        if (Cash > 0)
+        {
+            moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = $"$ {this.Cash}";
+        }
+        else
+        {
+            moneyText.GetComponent<TMPro.TextMeshProUGUI>().text = "Empty";
+        }
+        
     }
 }

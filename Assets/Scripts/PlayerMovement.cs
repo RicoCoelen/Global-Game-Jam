@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         controls.Enable();
         cashCount = FindObjectOfType<CashCount>();
         originalColor = GetComponent<SpriteRenderer>().color;
+        cashEstimatorText = GameObject.Find("Main Camera/Canvas/Money Estimator");
     }
 
     private void Update()
